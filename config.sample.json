@@ -1,0 +1,10 @@
+{
+  "images": {
+    "input": ["/image/directory/1", "/image/directory/2"],
+    "output": "/target/directory"
+  },
+  "videos": {
+    "input": ["/video/directory/1", "/video/directory/2"],
+    "output": "/target/directory"
+  }
+}

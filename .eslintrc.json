@@ -4,27 +4,22 @@
     "node": true,
     "es6": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 7,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react"],
-  "overrides": [{
-    "files": "*.js",
-    "rules":{
-      "camelcase": "off",
-      "@typescript-eslint/no-var-requires": "off"
+  "plugins": ["@typescript-eslint"],
+  "overrides": [
+    {
+      "files": "*.js",
+      "rules": {
+        "camelcase": "off",
+        "@typescript-eslint/no-var-requires": "off"
+      }
     }
-  }],
+  ],
   "rules": {
     "array-bracket-spacing": ["error", "never"],
     "array-bracket-newline": ["error", "consistent"],
@@ -198,81 +193,14 @@
     "template-tag-spacing": ["error", "never"],
     "template-curly-spacing": ["error", "never"],
     "yoda": ["error", "never"],
-    "jsx-quotes": ["error", "prefer-double"],
-    "quote-props": ["error", "as-needed"],
-    "react/display-name": "off",
-    "react/no-deprecated": "error",
-    "react/no-typos": "error",
-    "react/no-did-mount-set-state": "error",
-    "react/no-did-update-set-state": "error",
-    "react/no-direct-mutation-state": "error",
-    "react/no-access-state-in-setstate": "error",
-    "react/no-children-prop": "error",
-    "react/no-unescaped-entities": "off",
-    "react/no-unknown-property": "error",
-    "react/no-unsafe": "error",
-    "react/no-unused-prop-types": "error",
-    "react/no-unused-state": "error",
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/void-dom-elements-no-children": "error",
-    "react/jsx-curly-newline": [
-      "error",
-      {
-        "multiline": "consistent",
-        "singleline": "consistent"
-      }
-    ],
-    "react/jsx-curly-spacing": [
-      "error",
-      {
-        "when": "never"
-      }
-    ],
-    "react/jsx-equals-spacing": ["error", "never"],
-    "react/jsx-first-prop-new-line": ["error", "multiline"],
-    "react/jsx-indent": ["error", 2],
-    "react/jsx-indent-props": ["error", 2],
-    "react/jsx-key": "error",
-    "react/jsx-max-props-per-line": [
-      "error",
-      {
-        "maximum": 1,
-        "when": "multiline"
-      }
-    ],
-    "react/jsx-no-duplicate-props": "error",
-    "react/jsx-fragments": ["error", "syntax"],
-    "react/jsx-no-useless-fragment": "error",
-    "react/jsx-pascal-case": "error",
-    "react/jsx-props-no-multi-spaces": "error",
-    "react/jsx-tag-spacing": [
-      "error",
-      {
-        "closingSlash": "never",
-        "beforeSelfClosing": "always",
-        "afterOpening": "never",
-        "beforeClosing": "never"
-      }
-    ],
-    "react/jsx-wrap-multilines": "error"
+    "quote-props": ["error", "as-needed"]
   },
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [
-          ["@global", "./src"],
-          ["@components", "./src/components"],
-          ["@modules", "./src/modules"],
-          ["@data", "./src/data"],
-          ["@images", "./assets/img"],
-          ["@styles", "./src/styles"]
-        ],
-        "extensions": [".ts", ".tsx", ".json", ".md"]
+        "map": [["@global", "./src"]],
+        "extensions": [".ts", "json"]
       }
-    },
-    "react": {
-      "version": "detect"
     }
   }
 }
