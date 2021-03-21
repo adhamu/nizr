@@ -1,0 +1,17 @@
+{
+  "include": ["src/**/*.ts*"],
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "jsx": "react",
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "paths": {
+      "+global/*": ["src/*"]
+    }
+  }
+}
