@@ -20,14 +20,18 @@ export const createRequiredDirectories = (directories: string[]): void => {
   })
 }
 
-export const getDateTaken = async (file: string): Promise<Date> => {
-  const output = await exifr.parse(file)
-
-  if (output.DateTimeOriginal) {
-    return output.DateTimeOriginal
-  }
-
+const getFileModifiedTime = (file: string) => {
   const stats = statSync(file)
 
   return stats.mtime
+}
+
+export const getDateTaken = async (file: string): Promise<Date> => {
+  try {
+    const output = await exifr.parse(file)
+
+    return output.DateTimeOriginal ?? getFileModifiedTime(file)
+  } catch (error) {
+    return getFileModifiedTime(file)
+  }
 }

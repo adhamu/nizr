@@ -1,4 +1,5 @@
-import { existsSync } from 'fs'
+import { existsSync, copyFileSync } from 'fs'
+import { basename } from 'path'
 import globby from 'globby'
 
 import { createRequiredDirectories, getDateTaken } from './file'
@@ -31,8 +32,9 @@ const organise = async (sources: string[], target: string, glob: string) => {
       files.map(async file => {
         const dateTaken = await getDateTaken(file)
         const yearTaken = dateTaken.getFullYear()
-        const month = `0${dateTaken.getMonth() + 1}`
-        const monthTaken = `${month} - ${dateTaken.toLocaleString('default', {
+        const monthTaken = `${`0${dateTaken.getMonth() + 1}`.slice(
+          -2
+        )} - ${dateTaken.toLocaleString('default', {
           month: 'long',
         })}`
         const nestedTargetDirectory = `${target}/${yearTaken}/${monthTaken}/`
@@ -42,6 +44,7 @@ const organise = async (sources: string[], target: string, glob: string) => {
         }
 
         createRequiredDirectories(directoriesRequired)
+        copyFileSync(file, nestedTargetDirectory + basename(file))
       })
     })
   )
