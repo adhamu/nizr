@@ -1,11 +1,15 @@
 import { existsSync, copyFileSync } from 'fs'
 import { basename } from 'path'
 import globby from 'globby'
-import increment from 'add-filename-increment'
 
-import { createRequiredDirectories, getDateTaken } from './file'
-import config from '../config.json'
+import {
+  buildTargetDirectoryName,
+  createDirectoryIfNotExists,
+  getDateTaken,
+  buildFilename,
+} from './file'
 import logger from './logger'
+import config from '../config.json'
 
 const organise = async (sources: string[], target: string, glob: string) => {
   if (!sources || !target) {
@@ -35,32 +39,15 @@ const organise = async (sources: string[], target: string, glob: string) => {
         `${files.length} files found using ${glob} inside ${source}, organising...`
       )
 
-      const directoriesRequired: string[] = []
-
       files.map(async file => {
         const dateTaken = await getDateTaken(file)
-        const yearTaken = dateTaken.getFullYear()
-        const monthTaken = `${`0${dateTaken.getMonth() + 1}`.slice(
-          -2
-        )} - ${dateTaken.toLocaleString('default', {
-          month: 'long',
-        })}`
-        const targetDirectory = `${target}/${yearTaken}/${monthTaken}/`
+        const targetDirectory = buildTargetDirectoryName(dateTaken, target)
+        const filename = buildFilename(targetDirectory + basename(file))
 
-        if (!directoriesRequired.includes(targetDirectory)) {
-          directoriesRequired.push(targetDirectory)
-        }
+        createDirectoryIfNotExists(targetDirectory)
 
-        createRequiredDirectories(directoriesRequired)
-
-        let dest: string = targetDirectory + basename(file)
-
-        while (existsSync(dest)) {
-          dest = increment(dest)
-        }
-
-        logger(`Copying ${file} to ${dest}`)
-        copyFileSync(file, dest)
+        logger(`Copying ${file} to ${filename}`)
+        copyFileSync(file, filename)
       })
     })
   )

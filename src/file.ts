@@ -1,9 +1,10 @@
 import { existsSync, mkdirSync, statSync } from 'fs'
 import exifr from 'exifr'
+import increment from 'add-filename-increment'
 
 import logger from './logger'
 
-const createDirectory = (directory: string) => {
+export const createDirectoryIfNotExists = (directory: string): void => {
   if (!existsSync(directory)) {
     logger(`Creating directory ${directory}`)
 
@@ -12,12 +13,6 @@ const createDirectory = (directory: string) => {
       recursive: true,
     })
   }
-}
-
-export const createRequiredDirectories = (directories: string[]): void => {
-  directories.forEach(directory => {
-    createDirectory(directory)
-  })
 }
 
 const getFileModifiedTime = (file: string) => {
@@ -34,4 +29,28 @@ export const getDateTaken = async (file: string): Promise<Date> => {
   } catch (error) {
     return getFileModifiedTime(file)
   }
+}
+
+export const buildTargetDirectoryName = (
+  date: Date,
+  baseDirectory: string
+): string => {
+  const yearTaken = date.getFullYear()
+  const monthTaken = `${`0${date.getMonth() + 1}`.slice(
+    -2
+  )} - ${date.toLocaleString('default', {
+    month: 'long',
+  })}`
+
+  return `${baseDirectory}/${yearTaken}/${monthTaken}/`
+}
+
+export const buildFilename = (file: string): string => {
+  let filename = file
+
+  while (existsSync(filename)) {
+    filename = increment(filename)
+  }
+
+  return filename
 }
