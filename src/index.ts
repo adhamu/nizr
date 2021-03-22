@@ -22,7 +22,7 @@ const organise = async (config: Config) => {
   const { inputs, output, pattern = '*', move = false } = config
 
   if (!inputs || !output) {
-    return Promise.resolve()
+    return
   }
 
   await Promise.all(
@@ -30,7 +30,7 @@ const organise = async (config: Config) => {
       if (!existsSync(input)) {
         logger(`${input} does not exist, skipping`, 'WARNING')
 
-        return Promise.resolve()
+        return
       }
 
       logger(`Scanning ${input}`)
@@ -43,7 +43,7 @@ const organise = async (config: Config) => {
           'WARNING'
         )
 
-        return Promise.resolve()
+        return
       }
 
       logger(
