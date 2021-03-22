@@ -22,14 +22,15 @@ const organise = async (config: Config) => {
   const { inputs, output, pattern = '*', move = false } = config
 
   if (!inputs || !output) {
-    return
+    return Promise.resolve()
   }
 
   await Promise.all(
     inputs.map(async input => {
       if (!existsSync(input)) {
         logger(`${input} does not exist, skipping`, 'WARNING')
-        return
+
+        return Promise.resolve()
       }
 
       logger(`Scanning ${input}`)
@@ -41,7 +42,8 @@ const organise = async (config: Config) => {
           `No files found using pattern ${pattern} inside ${input}, skipping`,
           'WARNING'
         )
-        return
+
+        return Promise.resolve()
       }
 
       logger(
