@@ -8,6 +8,10 @@ import config from '../config.json'
 import logger from './logger'
 
 const organise = async (sources: string[], target: string, glob: string) => {
+  if (!sources || !target) {
+    return
+  }
+
   await Promise.all(
     sources.map(async source => {
       if (!existsSync(source)) {
@@ -65,13 +69,13 @@ const organise = async (sources: string[], target: string, glob: string) => {
 // eslint-disable-next-line semi-style
 ;(async () => {
   await organise(
-    config.images.input,
-    config.images.output,
+    config.images?.input,
+    config.images?.output,
     '{JPG,jpg,JPEG,jpeg,GIF,gif,png,PNG,tiff}'
   )
   await organise(
-    config.videos.input,
-    config.videos.output,
+    config.videos?.input,
+    config.videos?.output,
     '{mp4,MP4,MOV,mov,MPG,AAE,3gp,MTS}'
   )
 })()
