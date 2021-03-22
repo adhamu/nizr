@@ -49,10 +49,10 @@ export const buildFilename = (file: string): string => {
   let filename = file
   let counter = 1
 
-  const parts = parse(filename)
+  const { dir, name, ext } = parse(filename)
 
   while (existsSync(filename)) {
-    filename = `${parts.dir}/${parts.name}_${counter}${parts.ext}`
+    filename = `${dir}/${name}_${counter}${ext}`
     counter++
   }
 
