@@ -18,55 +18,53 @@ type Config = {
   move?: boolean
 }
 
-const organise = async (config: Config) => {
+const organise = (config: Config) => {
   const { inputs, output, pattern = '*', move = false } = config
 
   if (!inputs || !output) {
     return
   }
 
-  await Promise.all(
-    inputs.map(async input => {
-      if (!existsSync(input)) {
-        logger(`${input} does not exist, skipping`, 'WARNING')
+  inputs.map(async input => {
+    if (!existsSync(input)) {
+      logger(`${input} does not exist, skipping`, 'WARNING')
 
-        return
-      }
+      return
+    }
 
-      logger(`Scanning ${input}`)
+    logger(`Scanning ${input}`)
 
-      const files = await globby(`${input}/${pattern}`)
+    const files = await globby(`${input}/${pattern}`)
 
-      if (!files.length) {
-        logger(
-          `No files found using pattern ${pattern} inside ${input}, skipping`,
-          'WARNING'
-        )
-
-        return
-      }
-
+    if (!files.length) {
       logger(
-        `${files.length} files found using ${pattern} inside ${input}, organising...`
+        `No files found using pattern ${pattern} inside ${input}, skipping`,
+        'WARNING'
       )
 
-      files.map(async file => {
-        const dateTaken = await getDateTaken(file)
-        const targetDirectory = buildTargetDirectoryName(dateTaken, output)
-        const filename = buildFilename(targetDirectory + basename(file))
+      return
+    }
 
-        createDirectoryIfNotExists(targetDirectory)
+    logger(
+      `${files.length} files found using ${pattern} inside ${input}, organising...`
+    )
 
-        logger(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
-        move ? renameSync(file, filename) : copyFileSync(file, filename)
-      })
+    files.map(async file => {
+      const dateTaken = await getDateTaken(file)
+      const targetDirectory = buildTargetDirectoryName(dateTaken, output)
+      const filename = buildFilename(targetDirectory + basename(file))
+
+      createDirectoryIfNotExists(targetDirectory)
+
+      logger(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
+      move ? renameSync(file, filename) : copyFileSync(file, filename)
     })
-  )
+  })
 }
 
 // eslint-disable-next-line semi-style
 ;(() => {
-  config.map(async c => {
-    await organise(c)
+  config.map(c => {
+    organise(c)
   })
 })()
