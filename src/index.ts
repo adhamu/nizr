@@ -5,7 +5,7 @@ import globby from 'globby'
 import {
   buildTargetDirectoryName,
   createDirectoryIfNotExists,
-  getDateTaken,
+  getModifiedTime,
   buildFilename,
 } from './file'
 import logger from './logger'
@@ -25,9 +25,11 @@ const organise = async (config: Config) => {
     return
   }
 
-  const [files] = await Promise.all(
+  const scanFiles = await Promise.all(
     inputs.map(input => globby(`${input}/${pattern}`))
   )
+
+  const files = scanFiles.flat()
 
   if (!files.length) {
     logger(
@@ -38,7 +40,9 @@ const organise = async (config: Config) => {
     return
   }
 
-  const modified = await Promise.all(files.map(file => getDateTaken(file)))
+  const modified = await Promise.all(
+    files.flatMap(file => getModifiedTime(file))
+  )
 
   logger(`${files.length} files found using ${pattern}, organising...`)
 

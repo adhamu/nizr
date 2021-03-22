@@ -21,11 +21,11 @@ export const createDirectoryIfNotExists = (directory: string): void => {
   }
 }
 
-export const getDateTaken = async (file: string): Promise<Date> => {
+export const getModifiedTime = async (file: string): Promise<Date> => {
   try {
     const output = await exifr.parse(file)
 
-    return output.DateTimeOriginal ?? getFileModifiedTime(file)
+    return output?.DateTimeOriginal ?? getFileModifiedTime(file)
   } catch (error) {
     return getFileModifiedTime(file)
   }
