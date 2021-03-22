@@ -19,12 +19,12 @@ A tiny Node script for organising files into date folders
 
 The JSON config is an array of objects. Each object has the following properties
 
-| Name      | Description                                                                                       | Type    |
-| --------- | ------------------------------------------------------------------------------------------------- | ------- |
-| `inputs`  | A list of input source directories.                                                               | array   |
-| `output`  | The target directory for processed input sources.                                                 | string  |
-| `pattern` | (Optional) By default, no files are filtered but use a glob pattern to filter files.              | string  |
-| `move`    | (Optional) By default, files that processed are _copied_. Set this to `true` to _move_ the files. | boolean |
+| Name      | Description                                                                                           | Type    |
+| --------- | ----------------------------------------------------------------------------------------------------- | ------- |
+| `inputs`  | A list of input source directories.                                                                   | array   |
+| `output`  | The target directory for processed input sources.                                                     | string  |
+| `pattern` | (Optional) By default, no files are filtered but use a glob pattern to filter files.                  | string  |
+| `move`    | (Optional) By default, files that are processed are _copied_. Set this to `true` to _move_ the files. | boolean |
 
 ```sh
 $ cp config.sample.json config.json
