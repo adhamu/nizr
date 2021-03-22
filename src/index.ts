@@ -29,7 +29,7 @@ const organise = async (config: Config) => {
     inputs.map(input => globby(`${input}/${pattern}`))
   )
 
-  if (!files) {
+  if (!files.length) {
     logger('No files found, skipping', 'WARNING')
 
     return
