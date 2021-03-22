@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, statSync } from 'fs'
 import exifr from 'exifr'
+
 import logger from './logger'
 
 const createDirectory = (directory: string) => {
@@ -23,7 +24,7 @@ export const getDateTaken = async (file: string): Promise<Date> => {
   const output = await exifr.parse(file)
 
   if (output.DateTimeOriginal) {
-    output.DateTimeOriginal
+    return output.DateTimeOriginal
   }
 
   const stats = statSync(file)

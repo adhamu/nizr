@@ -1,44 +1,32 @@
-# Skeleton
+# Nizr
 
-A skeleton boilerplate repo for a React app.
+A tiny Node script for organising photos and videos into date folders
 
-## Technologies
+## Requirements
+- Node v14.15.5
+- Yarn
 
-- React
-- Typescript
+## Output Folder Format
 
-## Tooling
-
-- Parcel
-- ESLint
-- Prettier
-
-## Getting Started
-
-This repository is set as a template.
-
-You can click the `Use this template` on the repository homepage to create a new repository based off this one.
-
-Once you have done so.
-
-```sh
-$ git clone https://github.com/<username>/<project>
-$ cd <project>
-$ yarn
+```
+2021/03 - March/
+2021/02 - February/
+2021/01 - January/
 ```
 
-## Development
+## Config
+
+There are two objects in the JSON config file. One for `images` and one for `photos`. You can pass an array of paths to `input` and specify one `output` path which is the target directory after running script.
 
 ```sh
-$ yarn dev
+$ cp config.sample.json config.json
 ```
 
-Open up [http://localhost:1234](http://localhost:1234)
-
-## Production
+## Running
 
 ```sh
-$ yarn build
+$ yarn && yarn build
+$ node dist/index.js
 ```
 
-Everything gets output to the `dist` directory
+_Note_: Running this script _does not_ copy the files, it _moves_ them to the target directory.
