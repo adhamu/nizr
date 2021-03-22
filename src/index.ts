@@ -30,7 +30,7 @@ const organise = async (config: Config) => {
   )
 
   if (!files.length) {
-    logger('No files found, skipping', 'WARNING')
+    logger(`No files found in ${inputs.join(', ')}, skipping`, 'WARNING')
 
     return
   }
