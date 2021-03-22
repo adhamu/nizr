@@ -1,10 +1,14 @@
-{
-  "images": {
-    "input": ["/image/directory/1", "/image/directory/2"],
-    "output": "/target/directory"
+[
+  {
+    "inputs": ["/image/directory/1", "/image/directory/2"],
+    "output": "/target/directory",
+    "glob": "{JPG,jpg,JPEG,jpeg,GIF,gif,png,PNG,tiff}",
+    "move": true
   },
-  "videos": {
-    "input": ["/video/directory/1", "/video/directory/2"],
-    "output": "/target/directory"
+  {
+    "inputs": ["/video/directory/1", "/video/directory/2"],
+    "output": "/target/directory",
+    "glob": "{mp4,MP4,MOV,mov,MPG,AAE,3gp,MTS}",
+    "move": false
   }
-}
+]

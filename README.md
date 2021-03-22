@@ -1,8 +1,9 @@
 # Nizr
 
-A tiny Node script for organising photos and videos into date folders
+A tiny Node script for organising files into date folders
 
 ## Requirements
+
 - Node v14.15.5
 - Yarn
 
@@ -16,7 +17,14 @@ A tiny Node script for organising photos and videos into date folders
 
 ## Config
 
-There are two objects in the JSON config file. One for `images` and one for `photos`. You can pass an array of paths to `input` and specify one `output` path which is the target directory after running script.
+The JSON config is an array of objects. Each object has the following properties
+
+| Name     | Description                                                                                       | Type    |
+| -------- | ------------------------------------------------------------------------------------------------- | ------- |
+| `inputs` | A list of input source directories.                                                               | array   |
+| `output` | The target directory for processed input sources.                                                 | string  |
+| `glob`   | Glob pattern to filter files.                                                                     | string  |
+| `move`   | (Optional) By default, files that processed are _copied_. Set this to `true` to _move_ the files. | boolean |
 
 ```sh
 $ cp config.sample.json config.json
@@ -28,5 +36,3 @@ $ cp config.sample.json config.json
 $ yarn && yarn build
 $ node dist/index.js
 ```
-
-_Note_: Running this script _does not_ copy the files, it _moves_ them to the target directory.
