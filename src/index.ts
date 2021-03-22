@@ -14,12 +14,12 @@ import config from '../config.json'
 type Config = {
   inputs: string[]
   output: string
-  glob: string
+  pattern: string
   move?: boolean
 }
 
 const organise = async (config: Config) => {
-  const { inputs, output, glob, move = false } = config
+  const { inputs, output, pattern = '*', move = false } = config
 
   if (!inputs || !output) {
     return
@@ -34,18 +34,18 @@ const organise = async (config: Config) => {
 
       logger(`Scanning ${input}`)
 
-      const files = await globby(`${input}/*.${glob}`)
+      const files = await globby(`${input}/${pattern}`)
 
       if (!files.length) {
         logger(
-          `No files found using glob ${glob} inside ${input}, skipping`,
+          `No files found using pattern ${pattern} inside ${input}, skipping`,
           'WARNING'
         )
         return
       }
 
       logger(
-        `${files.length} files found using ${glob} inside ${input}, organising...`
+        `${files.length} files found using ${pattern} inside ${input}, organising...`
       )
 
       files.map(async file => {

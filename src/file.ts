@@ -1,8 +1,14 @@
 import { existsSync, mkdirSync, statSync } from 'fs'
+import { parse } from 'path'
 import exifr from 'exifr'
-import increment from 'add-filename-increment'
 
 import logger from './logger'
+
+const getFileModifiedTime = (file: string) => {
+  const stats = statSync(file)
+
+  return stats.mtime
+}
 
 export const createDirectoryIfNotExists = (directory: string): void => {
   if (!existsSync(directory)) {
@@ -13,12 +19,6 @@ export const createDirectoryIfNotExists = (directory: string): void => {
       recursive: true,
     })
   }
-}
-
-const getFileModifiedTime = (file: string) => {
-  const stats = statSync(file)
-
-  return stats.mtime
 }
 
 export const getDateTaken = async (file: string): Promise<Date> => {
@@ -47,9 +47,13 @@ export const buildTargetDirectoryName = (
 
 export const buildFilename = (file: string): string => {
   let filename = file
+  let counter = 1
+
+  const parts = parse(filename)
 
   while (existsSync(filename)) {
-    filename = increment(filename)
+    filename = `${parts.dir}/${parts.name}_${counter}${parts.ext}`
+    counter++
   }
 
   return filename
