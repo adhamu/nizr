@@ -1,4 +1,4 @@
-import { existsSync, copyFileSync, renameSync } from 'fs'
+import { copyFileSync, renameSync } from 'fs'
 import { basename } from 'path'
 import globby from 'globby'
 
@@ -18,47 +18,35 @@ type Config = {
   move?: boolean
 }
 
-const organise = (config: Config) => {
+const organise = async (config: Config) => {
   const { inputs, output, pattern = '*', move = false } = config
 
   if (!inputs || !output) {
     return
   }
 
-  inputs.map(async input => {
-    if (!existsSync(input)) {
-      logger(`${input} does not exist, skipping`, 'WARNING')
+  const [files] = await Promise.all(
+    inputs.map(input => globby(`${input}/${pattern}`))
+  )
 
-      return
-    }
+  if (!files) {
+    logger('No files found, skipping', 'WARNING')
 
-    logger(`Scanning ${input}`)
+    return
+  }
 
-    const files = await globby(`${input}/${pattern}`)
+  const modified = await Promise.all(files.map(file => getDateTaken(file)))
 
-    if (!files.length) {
-      logger(
-        `No files found using pattern ${pattern} inside ${input}, skipping`,
-        'WARNING'
-      )
+  logger(`${files.length} files found using ${pattern}, organising...`)
 
-      return
-    }
+  files.forEach((file, i) => {
+    const targetDirectory = buildTargetDirectoryName(modified[i], output)
+    const filename = buildFilename(targetDirectory + basename(file))
 
-    logger(
-      `${files.length} files found using ${pattern} inside ${input}, organising...`
-    )
+    createDirectoryIfNotExists(targetDirectory)
 
-    files.map(async file => {
-      const dateTaken = await getDateTaken(file)
-      const targetDirectory = buildTargetDirectoryName(dateTaken, output)
-      const filename = buildFilename(targetDirectory + basename(file))
-
-      createDirectoryIfNotExists(targetDirectory)
-
-      logger(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
-      move ? renameSync(file, filename) : copyFileSync(file, filename)
-    })
+    logger(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
+    move ? renameSync(file, filename) : copyFileSync(file, filename)
   })
 }
 
