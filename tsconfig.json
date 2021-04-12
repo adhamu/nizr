@@ -10,9 +10,6 @@
     "baseUrl": ".",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "paths": {
-      "+global/*": ["src/*"]
-    }
+    "esModuleInterop": true
   }
 }
