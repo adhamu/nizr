@@ -1,18 +1,9 @@
 /* eslint-disable no-console */
-export default (
-  message: string,
-  type: 'INFO' | 'WARNING' | 'ERROR' = 'INFO'
-): void => {
-  const output = `${new Date().toISOString()} --- ${type}: ${message}`
+const output = (message: string, type: 'INFO' | 'WARNING' | 'ERROR') =>
+  console.log(`${new Date().toISOString()} --- ${type}: ${message}`)
 
-  switch (type) {
-    case 'WARNING':
-      console.warn(output)
-      break
-    case 'ERROR':
-      console.error(output)
-      break
-    default:
-      console.log(output)
-  }
+export default {
+  info: (message: string): void => output(message, 'INFO'),
+  warn: (message: string): void => output(message, 'WARNING'),
+  error: (message: string): void => output(message, 'ERROR'),
 }

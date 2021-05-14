@@ -14,7 +14,7 @@ import config from '../config.json'
 type Config = {
   inputs: string[]
   output: string
-  pattern: string
+  pattern?: string
   move?: boolean
 }
 
@@ -32,19 +32,16 @@ const organise = async (config: Config) => {
   const files = scanFiles.flat()
 
   if (!files.length) {
-    logger(
-      `0 files found matching ${pattern} in ${inputs.join(', ')}, skipping`,
-      'WARNING'
+    logger.warn(
+      `0 files found matching ${pattern} in ${inputs.join(', ')}, skipping`
     )
 
     return
   }
 
-  const modified = await Promise.all(
-    files.flatMap(file => getModifiedTime(file))
-  )
+  const modified = await Promise.all(files.flatMap(getModifiedTime))
 
-  logger(`${files.length} files found using ${pattern}, organising...`)
+  logger.info(`${files.length} files found using ${pattern}, organising...`)
 
   files.forEach((file, i) => {
     const targetDirectory = buildTargetDirectoryName(modified[i], output)
@@ -52,14 +49,12 @@ const organise = async (config: Config) => {
 
     createDirectoryIfNotExists(targetDirectory)
 
-    logger(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
+    logger.info(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
     move ? renameSync(file, filename) : copyFileSync(file, filename)
   })
 }
 
 // eslint-disable-next-line semi-style
 ;(() => {
-  config.map(c => {
-    organise(c)
-  })
+  config.map(organise)
 })()
