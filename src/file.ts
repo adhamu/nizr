@@ -12,7 +12,7 @@ const getFileModifiedTime = (file: string) => {
 
 export const createDirectoryIfNotExists = (directory: string): void => {
   if (!existsSync(directory)) {
-    logger(`Creating directory ${directory}`)
+    logger.info(`Creating directory ${directory}`)
 
     mkdirSync(directory, {
       mode: 0o755,
