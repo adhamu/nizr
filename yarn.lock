@@ -3,9 +3,9 @@
 
 
 "@adhamu/zero@^1.0.2":
-  version "1.0.3"
-  resolved "https://npm.pkg.github.com/download/@adhamu/zero/1.0.3/2ea402518710db8d8abea2fb00810e3b582c464f1c88a868f46ea825fd6d478b#acc3714c60ca2a8c39e18ac3ea04b63f840360e7"
-  integrity sha512-33zUqFBl+Su/ar82yZvQLV97eA5iEMSA5d9eHOe6ahsD1dsFxTcco0YwoYKKz0WpRCJvHsFgoRASAoW3pOh5Og==
+  version "1.0.5"
+  resolved "https://npm.pkg.github.com/download/@adhamu/zero/1.0.5/28f5261c8bb2909edbcf487030007dae5d80603ea84fa0cd0a8c5624de38dcca#55462d9604b32a85ea9fc29145d586ef55314c0c"
+  integrity sha512-+CpZeCREFwW4U7yhIEFIoH1YaGN+dbOfvHbItJ3+E0ZIeS4UhINmhtp2wcywocwaUSb2NcwW+EkumaH2G2snHg==
   dependencies:
     "@babel/eslint-parser" "^7.16.3"
     "@emotion/eslint-plugin" "^11.7.0"
