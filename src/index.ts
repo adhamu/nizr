@@ -1,15 +1,16 @@
 import { copyFileSync, renameSync } from 'fs'
 import { basename } from 'path'
+
 import globby from 'globby'
 
+import config from '../config.json'
 import {
   buildTargetDirectoryName,
   createDirectoryIfNotExists,
   getModifiedTime,
   buildFilename,
 } from './file'
-import logger from './logger'
-import config from '../config.json'
+import { logger } from './logger'
 
 type Config = {
   inputs: string[]
@@ -18,8 +19,8 @@ type Config = {
   move?: boolean
 }
 
-const organise = async (config: Config) => {
-  const { inputs, output, pattern = '*', move = false } = config
+const organise = async (configuration: Config) => {
+  const { inputs, output, pattern = '*', move = false } = configuration
 
   if (!inputs || !output) {
     return
@@ -50,7 +51,8 @@ const organise = async (config: Config) => {
     createDirectoryIfNotExists(targetDirectory)
 
     logger.info(`${move ? 'Moving' : 'Copying'} ${file} to ${filename}`)
-    move ? renameSync(file, filename) : copyFileSync(file, filename)
+
+    return move ? renameSync(file, filename) : copyFileSync(file, filename)
   })
 }
 

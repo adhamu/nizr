@@ -1,8 +1,9 @@
 import { existsSync, mkdirSync, statSync } from 'fs'
 import { parse } from 'path'
+
 import exifr from 'exifr'
 
-import logger from './logger'
+import { logger } from './logger'
 
 const getFileModifiedTime = (file: string) => {
   const stats = statSync(file)
@@ -53,7 +54,7 @@ export const buildFilename = (file: string): string => {
 
   while (existsSync(filename)) {
     filename = `${dir}/${name}_${counter}${ext}`
-    counter++
+    counter += 1
   }
 
   return filename

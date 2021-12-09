@@ -1,15 +1,9 @@
 {
-  "include": ["src/**/*.ts*"],
+  "extends": "./node_modules/@adhamu/zero/tsconfig/base.json",
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2020",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "baseUrl": ".",
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true
+    "outDir": "./dist/"
   }
 }

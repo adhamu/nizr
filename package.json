@@ -8,15 +8,14 @@
     "lint": "eslint 'src/**/*.ts*' --ignore-path=.eslintignore --config=.eslintrc.json"
   },
   "devDependencies": {
+    "@adhamu/zero": "^1.0.2",
     "@types/node": "^14.14.35",
-    "@typescript-eslint/eslint-plugin": "^4.15.0",
-    "@typescript-eslint/parser": "^4.15.0",
-    "eslint": "^7.19.0",
-    "exifr": "^7.0.0",
-    "globby": "^11.0.2",
     "parcel": "^2.0.0-beta.2",
-    "prettier": "^2.1.2",
     "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "exifr": "^7.0.0",
+    "globby": "^11.0.2"
   },
   "targets": {
     "default": {
